@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <title>Personal Finance Budget</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        padding: 30px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #0077cc;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box;
+      }
+
+      button {
+        margin-top: 25px;
+        width: 100%;
+        padding: 12px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #005fa3;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+        color: green;
+        font-weight: bold;
+      }
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <h2>Budget Calculator</h2>
+      <form id="budgetForm">
+        <label>Income:</label>
+        <input type="number" id="income" required>
+
+        <label>Rent:</label>
+        <input type="number" id="rent" required>
+
+        <label>Groceries:</label>
+        <input type="number" id="groceries" required>
+
+        <label>Utilities:</label>
+        <input type="number" id="utilities" required>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+      </form>
+
+      <div id="result"></div>
+      <div id="chart_div" style="width: 500px; height: 300px; margin-top: 20px;"></div>
+
+    </div>
+
+    <script>
+      function submitForm() {
+        var data = {
+          income: document.getElementById("income").value,
+          rent: document.getElementById("rent").value,
+          groceries: document.getElementById("groceries").value,
+          utilities: document.getElementById("utilities").value
+        };
+        google.script.run.withSuccessHandler(displayResult).updateSheet(data);
+      }
+
+      function displayResult(result) {
+        document.getElementById("result").innerHTML = 
+          `💸 Total Expenses: ₹${result.totalExpenses}<br>💰 Savings: ₹${result.savings}`;
+      }
+    </script>
+  </body>
+</html>
